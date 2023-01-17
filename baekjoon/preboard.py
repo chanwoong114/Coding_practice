@@ -1,58 +1,48 @@
-N = int(input())
-D = [0]*(N+1)
-m = N
+# 1018 : 체스판 다시 칠하기
 
-for i in range(2, N+1):
-    if i%3==0:
-        if i%2==0: #3, 2 둘 다 나뉘는 경우
-            D[i] = min(D[i//3], D[i//2], D[i-1])+1
-        else: # 3으로만 나뉘는 경우
-            D[i] = min(D[i//3], D[i-1])+1
-    elif i%2==0: # 2로만 나뉘는 경우
-        D[i] = min(D[i//2], D[i-1])+1
-    else: # 아무것도 나뉘지 않는 경우
-        D[i] = D[i-1]+1
+n, m = map(int, input().split())
+board = []
 
-history=[]
-history.append(N)
+for _ in range(n):
+    board.append(list(input()))
 
-while N>3:
-    if N%3==0:
-        if N%2==0:
-            if D[N//3] <= D[N//2]:
-                if D[N//3] <= D[N-1]:
-                    history.append(N//3)
-                    N = N//3
-                else:
-                    history.append(N-1)
-                    N = N-1
+def paint(L):
+    LL = L.copy()
+    count1, count2 = 0,0
+    for i in range(8):
+        for j in range(8):
+            if (i+j)%2==0:
+                if LL[i][j] != 'W':
+                    count1 += 1
             else:
-                if D[N//2] <= D[N-1]:
-                    history.append(N//2)
-                    N = N//2
-                else:
-                    history.append(N-1)
-                    N = N-1
-        else:
-            if D[N//3] <= D[N-1]:
-                history.append(N//3)
-                N = N//3
+                if LL[i][j] != 'B':
+                    count1 += 1
+    LL = L.copy()
+    for i in range(8):
+        for j in range(8):
+            if (i+j)%2==0:
+                if LL[i][j] != 'B':
+                    count2 += 1
             else:
-                history.append(N-1)
-                N = N-1
-
-    elif N%2==0:
-        if D[N//2] <= D[N-1]:
-            history.append(N//2)
-            N = N//2
-        else:
-            history.append(N-1)
-            N = N-1
+                if LL[i][j] != 'W':
+                    count2 += 1
+    
+    if count1<count2:
+        return count1
     else:
-        history.append(N-1)
-        N = N-1
+        return count2
 
 
-print(D[m])
-history.append(1)
-print(*history)
+d = []
+for k in range(n-7):
+    for l in range(m-7):
+        c = []
+        for i in range(8):
+            b = []
+            for j in range(8):
+                b.append(board[i+k][j+l])
+            c.append(b)
+        
+        d.append(paint(c))
+
+print(min(d))
