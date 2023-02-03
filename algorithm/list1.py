@@ -1,30 +1,23 @@
 T = int(input())
 for test_case in range(1, T+1):
-    k, n, m = map(int, input().split())
-    lst = list(map(int, input().split()))
-    oil = [0]*(n+1)
-    distance = k
+    n = int(input())
+    cost = list(map(int, input().split()))
     count = 0
-    check = distance
+    buy = 0
+    sell = 0
 
-    for i in lst:
-        oil[i] = 1
-
-    while distance < n:
-        if oil[distance]:
-            count += 1
-        else:
-            while not oil[distance]:
-                distance -= 1
-                if check == distance:
-                    count = -1
-                    break
-            if count == -1:
+    for i in range(n):
+        diff = 0
+        for j in range(i+1, n):
+            if cost[i] < cost[j]:
+                diff = 1
                 break
+        if diff:
             count += 1
-        check = distance
-        distance += k
-    if count > 0:
-        print(f'#{test_case} {count}')
-    else:
-        print(f'#{test_case} 0')
+            buy += cost[i]
+        else:
+            sell += (count * cost[i]) - buy
+            count = 0
+            buy = 0
+
+    print(f'#{test_case} {sell}')
