@@ -1,7 +1,13 @@
-n = int(input())
-lst = [tuple(input().split()) for _ in range(n)]
+import sys
+input = sys.stdin.readline
 
-lst = sorted(lst, key = lambda x : (-int(x[1]), int(x[2]), -int(x[3]), x[0]))
+s = list(str(input()))
+s = s[:-1]
+s.sort(reverse=True)
 
-for i in lst:
-    print(i[0])
+sorted_s = ''
+
+for i in s:
+    sorted_s += i
+    
+print(sorted_s)
