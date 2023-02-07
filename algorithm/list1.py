@@ -1,30 +1,33 @@
-T = int(input())
-for test_case in range(1, T+1):
-    k, n, m = map(int, input().split())
-    lst = list(map(int, input().split()))
-    oil = [0]*(n+1)
-    distance = k
-    count = 0
-    check = distance
-
-    for i in lst:
-        oil[i] = 1
-
-    while distance < n:
-        if oil[distance]:
-            count += 1
-        else:
-            while not oil[distance]:
-                distance -= 1
-                if check == distance:
-                    count = -1
-                    break
-            if count == -1:
-                break
-            count += 1
-        check = distance
-        distance += k
-    if count > 0:
-        print(f'#{test_case} {count}')
+def maximum(a, b):
+    if a >= b:
+        return a
     else:
-        print(f'#{test_case} 0')
+        return b
+
+
+for test_case in range(1, 11):
+    a = int(input())
+    arr = []
+    for i in range(100):
+        arr.append(list(map(int, input().split())))
+
+    max_sum = 0
+    sum_diagonal1, sum_diagonal2 = 0, 0
+
+    for i in range(100):
+        sum_row = 0
+        sum_col = 0
+        sum_diagonal1 += arr[i][99 - i]
+        sum_diagonal2 += arr[99 - i][i]
+
+        for j in range(100):
+            sum_row += arr[i][j]
+            sum_col += arr[j][i]
+
+        max_sum = maximum(max_sum, sum_row)
+        max_sum = maximum(max_sum, sum_col)
+
+    max_sum = maximum(max_sum, sum_diagonal1)
+    max_sum = maximum(max_sum, sum_diagonal2)
+
+    print(f'#{test_case} {max_sum}')
