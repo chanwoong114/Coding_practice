@@ -1,27 +1,36 @@
-def selectsort(arr, n):
-    for i in range(0, n):
-        minindex = i
-        for j in range(i+1, n):
-            if arr[minindex] > arr[j]:
-                minindex = j
-        arr[i], arr[minindex] = arr[minindex], arr[i]
-    return arr
+import sys
+input = sys.stdin.readline
 
-T = int(input())
-for test_case in range(1, T+1):
-    n = int(input())
-    arr = list(map(int, input().split()))
-    arr = selectsort(arr, n)
-    lst = []
+n = int(input())
+pillar = [list(map(int, input().split())) for _ in range(n)]
 
-    if n%2:
-        for i in range(5):
-            lst.append(arr[n-1-i])
-            lst.append(arr[i])
-    else:
-        for i in range(5):
-            lst.append(arr[n-1-i])
-            lst.append(arr[i])
+pillar.sort(key = lambda x : x[0], reverse=True)
+pillar = list(zip(*pillar[::-1]))
 
+for i in range(2):
+    pillar[i] = list(pillar[i])
 
-    print(f'#{test_case}', *lst)
+center = pillar[1].index(max(pillar[1]))
+minimum = pillar[1][0]
+length = pillar[0][0]
+size = 0
+for i in range(1, center+1):
+    if minimum == pillar[1][center]:
+        size += minimum * (pillar[0][i] - length)
+    if pillar[1][i] > minimum:
+        size += minimum * (pillar[0][i] - length)
+        length = pillar[0][i]
+        minimum = pillar[1][i]
+
+minimum = pillar[1][-1]
+length = pillar[0][-1]+1
+
+for i in range(n-2, center-1, -1):
+    if pillar[1][i] > minimum:
+        size += minimum * (length - (pillar[0][i]+1))
+        length = pillar[0][i]+1
+        minimum = pillar[1][i]
+
+size += pillar[1][center] * (length - pillar[0][center])
+
+print(size)
