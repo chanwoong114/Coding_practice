@@ -1,7 +1,7 @@
 n = int(input())
-lst = [tuple(input().split()) for _ in range(n)]
+k = int(input())
 
-lst = sorted(lst, key = lambda x : (-int(x[1]), int(x[2]), -int(x[3]), x[0]))
+a = k//n + 1
+b = k%n + 1
 
-for i in lst:
-    print(i[0])
+print(a*b)
