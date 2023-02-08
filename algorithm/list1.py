@@ -1,33 +1,36 @@
-def maximum(a, b):
-    if a >= b:
-        return a
-    else:
-        return b
+import sys
+input = sys.stdin.readline
 
+n = int(input())
+pillar = [list(map(int, input().split())) for _ in range(n)]
 
-for test_case in range(1, 11):
-    a = int(input())
-    arr = []
-    for i in range(100):
-        arr.append(list(map(int, input().split())))
+pillar.sort(key = lambda x : x[0], reverse=True)
+pillar = list(zip(*pillar[::-1]))
 
-    max_sum = 0
-    sum_diagonal1, sum_diagonal2 = 0, 0
+for i in range(2):
+    pillar[i] = list(pillar[i])
 
-    for i in range(100):
-        sum_row = 0
-        sum_col = 0
-        sum_diagonal1 += arr[i][99 - i]
-        sum_diagonal2 += arr[99 - i][i]
+center = pillar[1].index(max(pillar[1]))
+minimum = pillar[1][0]
+length = pillar[0][0]
+size = 0
+for i in range(1, center+1):
+    if minimum == pillar[1][center]:
+        size += minimum * (pillar[0][i] - length)
+    if pillar[1][i] > minimum:
+        size += minimum * (pillar[0][i] - length)
+        length = pillar[0][i]
+        minimum = pillar[1][i]
 
-        for j in range(100):
-            sum_row += arr[i][j]
-            sum_col += arr[j][i]
+minimum = pillar[1][-1]
+length = pillar[0][-1]+1
 
-        max_sum = maximum(max_sum, sum_row)
-        max_sum = maximum(max_sum, sum_col)
+for i in range(n-2, center-1, -1):
+    if pillar[1][i] > minimum:
+        size += minimum * (length - (pillar[0][i]+1))
+        length = pillar[0][i]+1
+        minimum = pillar[1][i]
 
-    max_sum = maximum(max_sum, sum_diagonal1)
-    max_sum = maximum(max_sum, sum_diagonal2)
+size += pillar[1][center] * (length - pillar[0][center])
 
-    print(f'#{test_case} {max_sum}')
+print(size)

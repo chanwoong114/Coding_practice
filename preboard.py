@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+n = int(input())
+k = int(input())
+
+a = k//n + 1
+b = k%n + 1
+
+print(a*b)
+=======
 import sys
 input = sys.stdin.readline
 
@@ -11,3 +20,4 @@ for i in s:
     sorted_s += i
     
 print(sorted_s)
+>>>>>>> origin/main
