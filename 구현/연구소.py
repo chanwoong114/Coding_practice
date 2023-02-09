@@ -1,5 +1,7 @@
 from collections import deque
 import copy
+import sys
+input = sys.stdin.readline
 
 n, m = map(int, input().split())
 graph = []
