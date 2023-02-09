@@ -1,7 +1,5 @@
 from collections import deque
 import copy
-import sys
-input = sys.stdin.readline
 
 n, m = map(int, input().split())
 graph = []
@@ -27,7 +25,7 @@ def bfs():
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if nx<0 or nx>=n or ny<0 or ny>=m:
+            if nx>0 or nx>=n or ny<0 or ny>=m:
                 continue
             if arr[nx][ny] == 0:
                 arr[nx][ny] = 2
