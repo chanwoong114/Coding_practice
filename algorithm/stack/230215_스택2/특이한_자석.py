@@ -21,18 +21,18 @@ def dfs(n, d):
     for bb in range(2):
         if bb%2:
             if n-1<0:
-                break
+                continue
             elif not connect[n-1]:
-                break
+                continue
             else:
                 connect[n-1] = 0
                 dfs(n-1, d+1)
 
         else:
             if n+1>=4:
-                break
+                continue
             elif not connect[n+1]:
-                break
+                continue
             else:
                 connect[n+1] = 0
                 dfs(n+1, d+1)
@@ -54,18 +54,14 @@ for test_case in range(1, T+1):
             if wheel[j][2] != wheel[j+1][6]:
                 connect[j] = 1
         connect.insert(i[0]-1, 0)
-
         if i[1] > 0:
             dfs(i[0]-1, 1)
         else:
             dfs(i[0]-1, 0)
-        for k in wheel:
-            print(*k)
-        print(connect)
-
+    
 
     ans = 0
     for i in range(4):
-        ans += wheel[i][0]*((i+1)*2)
-    print(ans)
+        ans += wheel[i][0]*(2**i)
+    print(f'#{test_case}', ans)
 
