@@ -1,31 +1,42 @@
-n, m = map(int, input().split())
-search = int(input())
-board = [[0]*m for _ in range(n)]
+for test_case in range(1, 11):
+    tc, m = map(int, input().split())
+    graph = [[] for _ in range(100)]
 
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
-d = 0
-x, y = 0, 0
-board[x][y] = 1
-if search == 1:
-    print(1, 1)
-if n * m >= search:
-    for i in range(2, search+1):
-        nx = x + dx[d]
-        ny = y + dy[d]
+    line = list(map(int, input().split()))
+    for i in range(0, m*2, 2):
+        graph[line[i]].append(line[i+1])
 
-        if nx<0 or nx>=n or ny<0 or ny>=m or board[nx][ny]:
-            d = (d+1)%4
-            nx = x + dx[d]
-            ny = y + dy[d]
-        
-        if search == i:
-            print(nx+1, ny+1)
-            break
+    st = [0]
+    visited = [0]*100
+    visited[0] = 1
 
-        board[nx][ny] = i
-        x = nx
-        y = ny
+    def dfs():
+        while st:
+            if st[-1] == 99:
+                print(1)
+                break
 
-else:
-    print(0)
+            for i in graph[st[-1]]:
+                if not visited[i]:
+                    visited[i] = 1
+                    st.append(i)
+                    break
+            else:
+                st.pop()
+        else:
+            print(0)
+    flag = 0
+    def dfs2(n):
+        global flag
+        if n == 99:
+            flag = 1
+            return
+
+        for i in graph[n]:
+            if not visited[i]:
+                visited[i] = 1
+                dfs2(i)
+
+    dfs2(0)
+
+    print(flag)
