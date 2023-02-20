@@ -1,28 +1,42 @@
-T = 10
-for test_case in range(1, T+1):
-    t, v = map(int, input().split())
-    ll = list(map(int, input().split()))
+for test_case in range(1, 11):
+    tc, m = map(int, input().split())
     graph = [[] for _ in range(100)]
-    visit = [0]*100
 
-    for i in range(v):
-        graph[ll[i*2]].append(ll[i*2+1])
+    line = list(map(int, input().split()))
+    for i in range(0, m*2, 2):
+        graph[line[i]].append(line[i+1])
 
     st = [0]
-    visit[0] = 1
+    visited = [0]*100
+    visited[0] = 1
 
-    while st:
-        if st[-1] == 99:
-            print(f'#{test_case}', 1)
-            break
-
-        for i in graph[st[-1]]:
-            if not visit[i]:
-                visit[i] = 1
-                st.append(i)
+    def dfs():
+        while st:
+            if st[-1] == 99:
+                print(1)
                 break
-        else:
-            st.pop()
 
-    else:
-        print(f'#{test_case}', 0)
+            for i in graph[st[-1]]:
+                if not visited[i]:
+                    visited[i] = 1
+                    st.append(i)
+                    break
+            else:
+                st.pop()
+        else:
+            print(0)
+    flag = 0
+    def dfs2(n):
+        global flag
+        if n == 99:
+            flag = 1
+            return
+
+        for i in graph[n]:
+            if not visited[i]:
+                visited[i] = 1
+                dfs2(i)
+
+    dfs2(0)
+
+    print(flag)
