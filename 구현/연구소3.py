@@ -34,15 +34,16 @@ def bfs():
         count = 0
         for i in range(n):
             for j in range(n):
-                if not board[i][j] and visited[i][j] - 1 > count:
-                    count = visited[i][j] - 1
+                if not board[i][j]:
+                    if visited[i][j] - 1 > count:
+                        count = visited[i][j] - 1
         return count
 
     cnt = min(cnt, min_count())
 
 
 def per(a):
-    global two
+    global two, m
     if a == two - m:
         bfs()
         return
