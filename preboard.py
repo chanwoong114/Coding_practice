@@ -1,40 +1,45 @@
+bingo_board = [list(map(int, input().split())) for _ in range(5)]
+
+checkNum = [list(map(int, input().split())) for _ in range(5)]
+
+checklst = []
+for i in checkNum:
+    checklst += i
+
+visited = [[0] * 5 for _ in range(5)]
 
 
 
-def solution(bakery_schedule, current_time, k):
-    hour, minute = int(current_time[:2]), int(current_time[3:])
-    answer = 0
-    for i in bakery_schedule:
-        b_hour = int(i[:2])
-        b_minute = int(i[3:5])
-        bread = int(i[6:])
+ans = 0
+for k in range(0, 25):
+    for i in range(5):
+        for j in range(5):
+            if checklst[k] == bingo_board[i][j]:
+                visited[i][j] = 1
+                c = 0
+                v2 = 0
+                v4 = 0
+                for a in range(5):
+                    v1 = 0
+                    v3 = 0
 
-        if b_hour > hour:
-            k -= bread
-            if b_minute >= minute:
-                answer += 60*(b_hour - hour) + (b_minute - minute)
-                hour = b_hour
-                minute =b_minute
-            else:
-                answer += 60*((b_hour-1) - hour) + ((b_minute+60) - minute)
-                hour = b_hour
-                minute = b_minute
+                    for b in range(5):
+                        v1 += visited[a][b]
+                        v3 += visited[b][a]
+                    if v1 == 5:
+                        c += 1
+                    if v3 == 5:
+                        c += 1
 
-        elif b_hour == hour:
-            if b_minute >= minute:
-                k -= bread
-                answer += b_minute - minute
-                hour = b_hour
-                minute = b_minute
+                    v2 += visited[a][a]
+                    v4 += visited[a][4 - a]
 
-        if k <= 0:
-            break
+                if v2 == 5:
+                    c += 1
+                if v4 == 5:
+                    c += 1
 
-    if k > 0:
-        answer = -1
+                if c >= 3:
+                    print(k+1)
+                    exit(0)
 
-    return answer
-
-print(solution(["09:05 10", "12:20 5", "13:25 6", "14:24 5"], "12:05", 10))
-print(solution(["12:00 10"], "12:00", 10))
-print(solution(["12:00 10"], "12:00", 11))
