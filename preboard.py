@@ -1,45 +1,45 @@
-bingo_board = [list(map(int, input().split())) for _ in range(5)]
+tc = int(input())
 
-checkNum = [list(map(int, input().split())) for _ in range(5)]
+for test_case in range(1, tc + 1):
 
-checklst = []
-for i in checkNum:
-    checklst += i
+    n, m = map(int, input().split())
+    arr = [list(map(int, input().split())) for _ in range(n)]
 
-visited = [[0] * 5 for _ in range(5)]
+    sumV = []
+    total = []
+    row = []
+    s = 0
 
+    maxtotal = []
 
+    if n == m:  # 정사각형일 때
+        for i in range(n):
+            for j in range(m):
+                if i % 2 == 0:
+                    total.append(arr[j][i])
+                    s += arr[j][i]
+            sumV.append(s)
 
-ans = 0
-for k in range(0, 25):
-    for i in range(5):
-        for j in range(5):
-            if checklst[k] == bingo_board[i][j]:
-                visited[i][j] = 1
-                c = 0
-                v2 = 0
-                v4 = 0
-                for a in range(5):
-                    v1 = 0
-                    v3 = 0
+    elif n < m: # m이 n보다 클 때
+        for i in range(n + 1):
+            for j in range(m - (m - n)):
 
-                    for b in range(5):
-                        v1 += visited[a][b]
-                        v3 += visited[b][a]
-                    if v1 == 5:
-                        c += 1
-                    if v3 == 5:
-                        c += 1
+                if i % 2 == 0:
+                    total.append(arr[j][i])
+                    s += arr[j][i]
+            sumV.append(s)
+    else: # n 이 m 보다 클 때
+        for i in range(m):
+            for j in range(n):
+                if i % 2 == 0:
+                    total.append(arr[j][i])
+                    s += arr[j][i]
+            sumV.append(s)
 
-                    v2 += visited[a][a]
-                    v4 += visited[a][4 - a]
+    for i in range(n):
+        for j in range(m):
+            if arr[i][j] == max(total) and j % 2 == 0:
+                maxtotal.append(j)
 
-                if v2 == 5:
-                    c += 1
-                if v4 == 5:
-                    c += 1
-
-                if c >= 3:
-                    print(k+1)
-                    exit(0)
-
+    a, b, c, d = max(sumV), len(total), max(total), max(maxtotal) + 1
+    print(f'#{test_case}', a, b, c, d)
