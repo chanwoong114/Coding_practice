@@ -1,5 +1,5 @@
 graph = []
-f = open('./input.txt','r')
+f = open('input.txt', 'r')
 for i in range(0, 101):
     line = f.readline()
     if i >=1:
