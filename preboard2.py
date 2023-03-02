@@ -1,31 +1,53 @@
+ # 백준 2304 번 문제입니다.
+
 n = int(input())
-max_idx = 0
-min_idx = 9999
-arr = [0]*1001
-
+arr = []
 for i in range(n):
-  l,h = map(int,input().split())
-  arr[l] = h
-  max_idx = max(max_idx,l) # 맨 끝점
-  min_idx = min(min_idx,l) # 시작점
+    v1, v2 = map(int, input().split())
+    arr.append([v1, v2])
 
-answer = arr[min_idx]+arr[max_idx]
-for i in range(min_idx+1,max_idx):
-  max_left = 0
-  max_right = 0
+arr.sort()
+m = 0
+maxV = []
+for i in arr:
+    if i[1] > m:
+        m = i[1]
 
-  for j in range(min_idx,i): # 왼쪽 탐색
-    max_left = max(max_left,arr[j])
+for i in range(len(arr)):
+    if arr[i][1] == m:
+        maxV.append(arr[i])
 
-  for j in range(i+1,max_idx+1): #오른쪽 탐색
-    max_right = max(max_right,arr[j])
+k = 1
+sumV = []
+ma = 0
 
-  target_h = min(max_left,max_right)
+if len(maxV) > 1:
+    sumV.append((maxV[len(maxV) - 1][0] + 1 - maxV[0][0]) * maxV[len(maxV) - 1][1])
+elif len(maxV) == 1:
+    sumV.append(maxV[0][1])
 
-  if arr[i] <= target_h:
-    arr[i] = target_h # 높이갱
-    answer += target_h
-  else:
-    answer+=arr[i]
+for i in range(1, n):
 
-print(answer)
+    if arr[i - 1][1] == maxV[0][1]:
+
+        for j in range(n - 1, i - 2, -1):
+            if ma < arr[j][1]:
+                ma = arr[j][1]
+                maIndex = j
+
+            if ma < arr[j - 1][1]:
+                sumV.append((abs(arr[j - 1][0] - arr[maIndex][0])) * arr[maIndex][1])
+
+        break
+
+
+    elif arr[i - 1][1] <= arr[i][1]:
+        sumV.append((arr[i][0] - arr[i - k][0]) * arr[i - k][1])
+        k = 1
+
+    elif arr[i - 1][1] > arr[i][1]:
+        k += 1
+if n == 1:
+    sumV.clear()
+    sumV.append(arr[0][1])
+print(sum(sumV))
