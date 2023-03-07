@@ -1,0 +1,25 @@
+h2{
+  color: darkviolet !important;
+}
+
+p {
+  color: orange;
+}
+
+.blue {
+  color: blue;
+}
+
+.green {
+  color : green;
+}
+
+#red {
+  color: red;
+}
+
+button {
+  font-size: 24px;
+  background-color: red;
+  color: lightblue;
+}
