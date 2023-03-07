@@ -1,5 +1,4 @@
-dic = {(1, 2): 2, (2, 3): 3}
-dic1 = {}
+from random import *
 
-for i in dic1.keys():
-    print(1)
+i = randint(0, 1)
+print(i)
