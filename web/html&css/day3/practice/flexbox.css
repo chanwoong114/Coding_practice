@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.item1 {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  margin: 20px;
+}
+.item2 {
+  width: 100px;
+  height: 100px;
+  background-color: orange;
+  margin: 20px;
+}
+.item3 {
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  margin: 20px;
+}
+.item4 {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  margin: 20px;
+}
+.item5 {
+  width: 100px;
+  height: 100px;
+  background-color: darkblue;
+  margin: 20px;
+}

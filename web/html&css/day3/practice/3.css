@@ -1,0 +1,25 @@
+.header {
+  height: 100px;
+  background-color: aquamarine;
+}
+
+.section-left {
+  float: left;
+  height: 500px;
+  background-color: bisque;
+  width: 30%;
+}
+
+.section-right {
+  float: left;
+  width: 70%;
+  height: 500px;
+  background-color: skyblue;
+}
+
+.footer {
+  clear: both; 
+  /* float 끝내기 */
+  height: 100px;
+  background-color: yellowgreen;
+}
