@@ -6,15 +6,12 @@ for _ in range(T):
     for _ in range(n):
         a, b, d = map(int, input().split())
         check = 0
-
         if ((a-s1)**2 + (b-s2)**2)**.5 <= d:
             check += 1
         if ((a - e1) ** 2 + (b - e2) ** 2) ** .5 <= d:
             check += 1
-
         if check == 1:
             cnt += 1
-
     print(cnt)
 
 

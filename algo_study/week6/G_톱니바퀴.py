@@ -5,14 +5,12 @@ def rotation1(arr):
     arr[0] = save
     return arr
 
-
 def rotation2(arr):
     save = arr[0]
     for ii in range(7):
         arr[ii] = arr[ii + 1]
     arr[7] = save
     return arr
-
 
 def dfs(n, d):
     connect[n] = 0
@@ -25,7 +23,6 @@ def dfs(n, d):
         dfs(n + 1, -d)
     if n - 1 >= 0 and connect[n - 1]:
         dfs(n - 1, -d)
-
 
 wheel = [list(map(int, input().strip())) for _ in range(4)]
 t = int(input())
