@@ -1,10 +1,16 @@
 def plus(d):
-    dice[d][0][0], dice[d][0][2], dice[d][2][2], dice[d][2][0] = dice[d][2][0], dice[d][0][0], dice[d][0][2], dice[d][2][2]
-    dice[d][0][1], dice[d][1][2], dice[d][2][1], dice[d][1][0] = dice[d][1][0], dice[d][0][1], dice[d][1][2], dice[d][2][1]
+    dice[d][0][0], dice[d][0][2], dice[d][2][2], dice[d][2][0] = dice[d][2][0], dice[d][0][0], dice[d][0][2], \
+        dice[d][2][2]
+    dice[d][0][1], dice[d][1][2], dice[d][2][1], dice[d][1][0] = dice[d][1][0], dice[d][0][1], dice[d][1][2], \
+        dice[d][2][1]
+
 
 def minus(d):
-    dice[d][2][0], dice[d][0][0], dice[d][0][2], dice[d][2][2] = dice[d][0][0], dice[d][0][2], dice[d][2][2], dice[d][2][0]
-    dice[d][1][0], dice[d][0][1], dice[d][1][2], dice[d][2][1] = dice[d][0][1], dice[d][1][2], dice[d][2][1], dice[d][1][0]
+    dice[d][2][0], dice[d][0][0], dice[d][0][2], dice[d][2][2] = dice[d][0][0], dice[d][0][2], dice[d][2][2], \
+        dice[d][2][0]
+    dice[d][1][0], dice[d][0][1], dice[d][1][2], dice[d][2][1] = dice[d][0][1], dice[d][1][2], dice[d][2][1], \
+        dice[d][1][0]
+
 
 def turn(i, j):
     if i == 'U':
@@ -23,25 +29,25 @@ def turn(i, j):
         if j == '+':
             plus(1)
             for t in range(3):
-                dice[4][2 - t][0], dice[2][2][t], dice[5][2 - t][2], dice[3][0][t] = dice[3][0][t], dice[4][2 - t][0], \
-                    dice[2][2][t], dice[5][2 - t][2]
+                dice[4][2 - t][0], dice[2][2][2 - t], dice[5][t][2], dice[3][0][t] = dice[3][0][t], dice[4][2 - t][0], \
+                    dice[2][2][2 - t], dice[5][t][2]
         if j == '-':
             minus(1)
             for t in range(3):
-                dice[3][0][t], dice[4][2 - t][0], dice[2][2][t], dice[5][2 - t][2] = dice[4][2 - t][0], dice[2][2][t], \
-                    dice[5][2 - t][2], dice[3][0][t]
+                dice[3][0][t], dice[4][2 - t][0], dice[2][2][2 - t], dice[5][t][2] = dice[4][2 - t][0], dice[2][2][2 - t], \
+                    dice[5][t][2], dice[3][0][t]
 
     if i == 'F':
         if j == '+':
             plus(2)
             for t in range(3):
-                dice[5][2][t], dice[0][2][t], dice[4][2][t], dice[1][0][t] = dice[0][2][t], dice[4][2][t], \
-                    dice[1][0][t], dice[5][2][t]
+                dice[5][2][t], dice[0][2][t], dice[4][2][t], dice[1][0][2 - t] = dice[0][2][t], dice[4][2][t], \
+                    dice[1][0][2 - t], dice[5][2][t]
         if j == '-':
             minus(2)
             for t in range(3):
-                dice[0][2][t], dice[4][2][t], dice[1][0][t], dice[5][2][t] = dice[5][2][t], dice[0][2][t], \
-                    dice[4][2][t], dice[1][0][t]
+                dice[0][2][t], dice[4][2][t], dice[1][0][2 - t], dice[5][2][t] = dice[5][2][t], dice[0][2][t], \
+                    dice[4][2][t], dice[1][0][2 - t]
 
     if i == 'B':
         if j == '+':
@@ -53,19 +59,19 @@ def turn(i, j):
             minus(3)
             for t in range(3):
                 dice[5][0][t], dice[1][2][2 - t], dice[4][0][t], dice[0][0][t] = dice[0][0][t], dice[5][0][t], \
-                dice[1][2][2 - t], dice[4][0][t]
+                    dice[1][2][2 - t], dice[4][0][t]
 
     if i == 'L':
         if j == '+':
             plus(4)
             for t in range(3):
                 dice[0][t][0], dice[2][t][0], dice[1][t][0], dice[3][t][0] = dice[3][t][0], dice[0][t][0], \
-                    dice[2][t][0], dice[3][t][0]
+                    dice[2][t][0], dice[1][t][0]
         if j == '-':
             minus(4)
             for t in range(3):
-                 dice[3][t][0], dice[0][t][0], dice[2][t][0], dice[3][t][0] = dice[0][t][0], dice[2][t][0], \
-                     dice[1][t][0], dice[3][t][0]
+                dice[3][t][0], dice[0][t][0], dice[2][t][0], dice[1][t][0] = dice[0][t][0], dice[2][t][0], \
+                    dice[1][t][0], dice[3][t][0]
 
     if i == 'R':
         if j == '+':
@@ -78,6 +84,7 @@ def turn(i, j):
             for t in range(3):
                 dice[2][t][2], dice[1][t][2], dice[3][t][2], dice[0][t][2] = dice[0][t][2], dice[2][t][2], \
                     dice[1][t][2], dice[3][t][2]
+
 
 T = int(input())
 for _ in range(T):
@@ -92,5 +99,6 @@ for _ in range(T):
     order = list(map(str, input().split()))
     for o in order:
         turn(o[0], o[1])
+
     for k in dice[0]:
-        print(*k)
+        print("".join(k))
