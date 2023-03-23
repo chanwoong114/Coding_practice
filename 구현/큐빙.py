@@ -1,104 +1,35 @@
-def plus(d):
-    dice[d][0][0], dice[d][0][2], dice[d][2][2], dice[d][2][0] = dice[d][2][0], dice[d][0][0], dice[d][0][2], \
-        dice[d][2][2]
-    dice[d][0][1], dice[d][1][2], dice[d][2][1], dice[d][1][0] = dice[d][1][0], dice[d][0][1], dice[d][1][2], \
-        dice[d][2][1]
+N, M, x, y, k = map(int, input().split())
+arr = [list(map(int, input().split())) for _ in range(N)]
+lst = list(map(int, input().split()))
+dice1 = {1: 6, 2: 5, 3: 4, 4: 3, 5: 2, 6: 1} # 위 찾기
+dice2 = {1: [0, 3, 4, 2, 5],
+         2: [0, 3, 4, 6, 1],
+         3: [0, 6, 1, 2, 5],
+         4: [0, 1, 6, 2, 5],
+         5: [0, 3, 4, 1, 6],
+         6: [0, 3, 4, 5, 2]} # 아래 찾기
 
+for row in range(N):
+    if arr[row].count(0) == 1:
+        col = arr[row].index(0)
+        break
 
-def minus(d):
-    dice[d][2][0], dice[d][0][0], dice[d][0][2], dice[d][2][2] = dice[d][0][0], dice[d][0][2], dice[d][2][2], \
-        dice[d][2][0]
-    dice[d][1][0], dice[d][0][1], dice[d][1][2], dice[d][2][1] = dice[d][0][1], dice[d][1][2], dice[d][2][1], \
-        dice[d][1][0]
-
-
-def turn(i, j):
-    if i == 'U':
-        if j == '+':
-            plus(0)
-            for t in range(3):
-                dice[5][t][0], dice[2][0][2 - t], dice[4][2 - t][2], dice[3][2][t] = dice[3][2][t], dice[5][t][0], \
-                    dice[2][0][2 - t], dice[4][2 - t][2]
-        if j == '-':
-            minus(0)
-            for t in range(3):
-                dice[3][2][t], dice[5][t][0], dice[2][0][2 - t], dice[4][2 - t][2] = dice[5][t][0], dice[2][0][2 - t], \
-                    dice[4][2 - t][2], dice[3][2][t]
-
-    if i == 'D':
-        if j == '+':
-            plus(1)
-            for t in range(3):
-                dice[4][2 - t][0], dice[2][2][2 - t], dice[5][t][2], dice[3][0][t] = dice[3][0][t], dice[4][2 - t][0], \
-                    dice[2][2][2 - t], dice[5][t][2]
-        if j == '-':
-            minus(1)
-            for t in range(3):
-                dice[3][0][t], dice[4][2 - t][0], dice[2][2][2 - t], dice[5][t][2] = dice[4][2 - t][0], dice[2][2][2 - t], \
-                    dice[5][t][2], dice[3][0][t]
-
-    if i == 'F':
-        if j == '+':
-            plus(2)
-            for t in range(3):
-                dice[5][2][t], dice[0][2][t], dice[4][2][t], dice[1][0][2 - t] = dice[0][2][t], dice[4][2][t], \
-                    dice[1][0][2 - t], dice[5][2][t]
-        if j == '-':
-            minus(2)
-            for t in range(3):
-                dice[0][2][t], dice[4][2][t], dice[1][0][2 - t], dice[5][2][t] = dice[5][2][t], dice[0][2][t], \
-                    dice[4][2][t], dice[1][0][2 - t]
-
-    if i == 'B':
-        if j == '+':
-            plus(3)
-            for t in range(3):
-                dice[0][0][t], dice[5][0][t], dice[1][2][2 - t], dice[4][0][t] = dice[5][0][t], dice[1][2][2 - t], \
-                    dice[4][0][t], dice[0][0][t]
-        if j == '-':
-            minus(3)
-            for t in range(3):
-                dice[5][0][t], dice[1][2][2 - t], dice[4][0][t], dice[0][0][t] = dice[0][0][t], dice[5][0][t], \
-                    dice[1][2][2 - t], dice[4][0][t]
-
-    if i == 'L':
-        if j == '+':
-            plus(4)
-            for t in range(3):
-                dice[0][t][0], dice[2][t][0], dice[1][t][0], dice[3][t][0] = dice[3][t][0], dice[0][t][0], \
-                    dice[2][t][0], dice[1][t][0]
-        if j == '-':
-            minus(4)
-            for t in range(3):
-                dice[3][t][0], dice[0][t][0], dice[2][t][0], dice[1][t][0] = dice[0][t][0], dice[2][t][0], \
-                    dice[1][t][0], dice[3][t][0]
-
-    if i == 'R':
-        if j == '+':
-            plus(5)
-            for t in range(3):
-                dice[0][t][2], dice[2][t][2], dice[1][t][2], dice[3][t][2] = dice[2][t][2], dice[1][t][2], \
-                    dice[3][t][2], dice[0][t][2]
-        if j == '-':
-            minus(5)
-            for t in range(3):
-                dice[2][t][2], dice[1][t][2], dice[3][t][2], dice[0][t][2] = dice[0][t][2], dice[2][t][2], \
-                    dice[1][t][2], dice[3][t][2]
-
-
-T = int(input())
-for _ in range(T):
-    dice = [[['w', 'w', 'w'], ['w', 'w', 'w'], ['w', 'w', 'w']],
-            [['y', 'y', 'y'], ['y', 'y', 'y'], ['y', 'y', 'y']],
-            [['r', 'r', 'r'], ['r', 'r', 'r'], ['r', 'r', 'r']],
-            [['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']],
-            [['g', 'g', 'g'], ['g', 'g', 'g'], ['g', 'g', 'g']],
-            [['b', 'b', 'b'], ['b', 'b', 'b'], ['b', 'b', 'b']]
-            ]
-    n = int(input())
-    order = list(map(str, input().split()))
-    for o in order:
-        turn(o[0], o[1])
-
-    for k in dice[0]:
-        print("".join(k))
+dr = [0, 0, 0, -1, 1]
+dc = [0, 1, -1, 0, 0]
+t = 1
+r = row
+c = col
+value = [0]*7
+for i in range(k):
+    if r+dr[lst[i]]<0 or r+dr[lst[i]]>=N or c+dc[lst[i]]<0 or c+dc[lst[i]]>=M:
+        continue
+    if arr[r+dr[lst[i]]][c+dc[lst[i]]] != 0:
+        value[dice2[t][lst[i]]] = arr[r+dr[lst[i]]][c+dc[lst[i]]]
+        arr[r+dr[lst[i]]][c+dc[lst[i]]] = 0
+    else:
+        arr[r+dr[lst[i]]][c+dc[lst[i]]] = value[dice2[t][lst[i]]]
+    t = dice1[dice2[t][lst[i]]]
+    print(value[t])
+    print(value, t)
+    r = r+dr[lst[i]]
+    c = c+dc[lst[i]]
