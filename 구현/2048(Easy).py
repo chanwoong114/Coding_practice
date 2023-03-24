@@ -1,46 +1,106 @@
 from copy import deepcopy
 
 def move(a, d, board):
-    flag = 0
     if d == 0:
         for i in range(a):
-            for j in range(a-1, 0, -1):
-                if not board[i][j] or board[i][j] == board[i][j-1]:
-                    board[i][j] += board[i][j-1]
-                    board[i][j-1] = 0
-                    flag = 1
+            cnt = 0
+            for j in range(a - 1, -1, -1):
+                if board[i][j]:
+                    for jj in range(j + 1, a - cnt):
+                        if board[i][j] == board[i][jj]:
+                            board[i][j] = 0
+                            board[i][jj] *= 2
+                            cnt += 1
+                            break
+
+                        elif board[i][jj] and board[i][j] != board[i][jj]:
+                            cnt += 1
+                            save = board[i][j]
+                            board[i][j] = 0
+                            board[i][jj - 1] = save
+                            break
+
+                        elif jj == a - cnt - 1:
+                            save = board[i][j]
+                            board[i][j] = 0
+                            board[i][jj] = save
 
     elif d == 1:
         for i in range(a):
-            for j in range(a-1):
-                if not board[i][j] or board[i][j] == board[i][j+1]:
-                    board[i][j] += board[i][j+1]
-                    board[i][j+1] = 0
-                    flag = 1
+            cnt = 0
+            for j in range(a):
+                if board[i][j]:
+                    for jj in range(j - 1, -1 + cnt, -1):
+                        if board[i][j] == board[i][jj]:
+                            board[i][j] = 0
+                            board[i][jj] *= 2
+                            cnt += 1
+                            break
+
+                        elif board[i][jj] and board[i][j] != board[i][jj]:
+                            cnt += 1
+                            save = board[i][j]
+                            board[i][j] = 0
+                            board[i][jj + 1] = save
+                            break
+
+                        elif jj == cnt:
+                            save = board[i][j]
+                            board[i][j] = 0
+                            board[i][jj] = save
 
     elif d == 2:
         for i in range(a):
-            for j in range(a-1, 0, -1):
-                if not board[j][i] or board[j][i] == board[j-1][i]:
-                    board[j][i] += board[j-1][i]
-                    board[j-1][i] = 0
-                    flag = 1
+            cnt = 0
+            for j in range(a - 1, -1, -1):
+                if board[j][i]:
+                    for jj in range(j + 1, a - cnt):
+                        if board[j][i] == board[jj][i]:
+                            board[j][i] = 0
+                            board[jj][i] *= 2
+                            cnt += 1
+                            break
+
+                        elif board[jj][i] and board[j][i] != board[jj][i]:
+                            cnt += 1
+                            save = board[j][i]
+                            board[j][i] = 0
+                            board[jj-1][i] = save
+                            break
+
+                        elif jj == a - cnt - 1:
+                            save = board[j][i]
+                            board[j][i] = 0
+                            board[jj][i] = save
 
     elif d == 3:
         for i in range(a):
-            for j in range(a-1):
-                if not board[j][i] or board[j][i] == board[j+1][i]:
-                    board[j][i] += board[j+1][i]
-                    board[j+1][i] = 0
-                    flag = 1
+            cnt = 0
+            for j in range(a):
+                if board[j][i]:
+                    for jj in range(j - 1, -1 + cnt, -1):
+                        if board[j][i] == board[jj][i]:
+                            board[j][i] = 0
+                            board[jj][i] *= 2
+                            cnt += 1
+                            break
 
-    return flag, board
+                        elif board[jj][i] and board[j][i] != board[jj][i]:
+                            cnt += 1
+                            save = board[j][i]
+                            board[j][i] = 0
+                            board[jj + 1][i] = save
+                            break
+
+                        elif jj == cnt:
+                            save = board[j][i]
+                            board[j][i] = 0
+                            board[jj][i] = save
 
 def dfs(a, d, lst):
     global v
-    flag, lst1 = move(n, d, lst)
-    if not flag:
-        return
+    lst1 = deepcopy(lst)
+    move(n, d, lst1)
 
     if a == 5:
         for k in lst1:
@@ -55,6 +115,8 @@ arr = [list(map(int, input().split())) for _ in range(n)]
 v = 0
 
 for ii in range(4):
-    dfs(1, ii, arr)
+    arr1 = deepcopy(arr)
+    dfs(1, ii, arr1)
 
 print(v)
+

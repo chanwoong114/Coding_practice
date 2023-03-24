@@ -1,15 +1,9 @@
 def rotation1(arr):
-    save = arr[7]
-    for ii in range(7, 0, -1):
-        arr[ii] = arr[ii - 1]
-    arr[0] = save
+    arr.insert(0, arr.pop())
     return arr
 
 def rotation2(arr):
-    save = arr[0]
-    for ii in range(7):
-        arr[ii] = arr[ii + 1]
-    arr[7] = save
+    arr.append(arr.pop(0))
     return arr
 
 def dfs(n, d):
