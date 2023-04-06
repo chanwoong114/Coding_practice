@@ -1,53 +1,47 @@
- # 백준 2304 번 문제입니다.
+def honey(idx, jdx, res):
+    global maxV, maxV1
 
-n = int(input())
-arr = []
-for i in range(n):
-    v1, v2 = map(int, input().split())
-    arr.append([v1, v2])
+    def max_honey(idx, cnt, S, r, lst):
+        global maxV1
+        if cnt > c:
+            return
+        if maxV1 < S:
+            maxV1 = S
+        if r == m:
+            return
 
-arr.sort()
-m = 0
-maxV = []
-for i in arr:
-    if i[1] > m:
-        m = i[1]
+        for i in range(idx, m):
+            max_honey(i + 1, cnt + lst[i], S + lst[i] ** 2, r + 1, lst)
 
-for i in range(len(arr)):
-    if arr[i][1] == m:
-        maxV.append(arr[i])
+    if len(res) == 2:
+        maxV1 = 0
+        lst1 = arr[res[0][0]][res[0][1]: res[0][1] + m]
+        max_honey(0, 0, 0, 0, lst1)
+        temp = maxV1
+        maxV1 = 0
+        lst2 = arr[res[1][0]][res[1][1]: res[1][1] + m]
+        max_honey(0, 0, 0, 0, lst2)
 
-k = 1
-sumV = []
-ma = 0
-
-if len(maxV) > 1:
-    sumV.append((maxV[len(maxV) - 1][0] + 1 - maxV[0][0]) * maxV[len(maxV) - 1][1])
-elif len(maxV) == 1:
-    sumV.append(maxV[0][1])
-
-for i in range(1, n):
-
-    if arr[i - 1][1] == maxV[0][1]:
-
-        for j in range(n - 1, i - 2, -1):
-            if ma < arr[j][1]:
-                ma = arr[j][1]
-                maIndex = j
-
-            if ma < arr[j - 1][1]:
-                sumV.append((abs(arr[j - 1][0] - arr[maIndex][0])) * arr[maIndex][1])
-
-        break
+        maxV = max(maxV, maxV1 + temp)
 
 
-    elif arr[i - 1][1] <= arr[i][1]:
-        sumV.append((arr[i][0] - arr[i - k][0]) * arr[i - k][1])
-        k = 1
 
-    elif arr[i - 1][1] > arr[i][1]:
-        k += 1
-if n == 1:
-    sumV.clear()
-    sumV.append(arr[0][1])
-print(sum(sumV))
+    for i in range(idx, n):
+        for j in range(n - m + 1):
+            if i == idx and j < jdx:
+                continue
+
+            res.append((i, j))
+            honey(i, j + m - 1, res)
+            res.pop()
+
+
+T = int(input())
+for test_case in range(1, T + 1):
+    n, m, c = map(int, input().split())
+    arr = [list(map(int, input().split())) for _ in range(n)]
+    maxV = 0
+    maxV1 = 0
+
+    honey(0, 0, [])
+    print(maxV)
